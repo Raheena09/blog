@@ -1,17 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import CreateBlog from "./Components/CreateBlog";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import firebase from "firebase/compat";
+
+import Hero from "./Hero";
+import Login from "./Login";
+import Nav from "./Components/Nav";
+
+import { ThemeProvider } from "@material-ui/core";
+import theme from './Components/Theme';
+
+const Routing = () => {
+  var database = firebase.database();
+
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/" component={App} />
+        <Route path="/createBlog" component={CreateBlog} />
+      </Switch>
+    </Router>
+  );
+};
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ThemeProvider theme={theme}>
+      <Routing />
+    </ThemeProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

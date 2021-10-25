@@ -1,26 +1,20 @@
-import "./App.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Login from "./Login";
+import React from "react";
 import { useState, useEffect } from "react";
-
-
+import "./App.css";
 import fire from "./fire";
+import firebase from "firebase/compat";
+import Login from "./Login";
 import Hero from "./Hero";
 import CreateBlog from "./Components/CreateBlog";
 function App() {
   const [user, setUser] = useState("");
-  const [username, setUsername] = useState("");
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [hasAccount, setHasAccount] = useState(false);
 
-  const[localusername, setLocalusername]= useState("");
-
   const clearInputs = () => {
- 
     setEmail("");
     setPassword("");
   };
@@ -47,10 +41,6 @@ function App() {
             break;
         }
       });
-      localStorage.setItem("username",JSON.stringify(username));
-      const getName= JSON.parse(localStorage.getItem("username"));
-      setLocalusername(getName);
-
   };
 
   const handleSignup = () => {
@@ -95,28 +85,24 @@ function App() {
   });
   return (
     <div className="App">
-     
-         
-          {user ? (
-            <Hero handleLogout={handleLogout}  username={localusername}/>
-          ) : (
-            <Login
-              email={email}
-              setEmail={setEmail}
-              username={username}
-              setUsername={setUsername}
-              password={password}
-              setPassword={setPassword}
-              handleLogin={handleLogin}
-              handleSignup={handleSignup}
-              hasAccount={hasAccount}
-              setHasAccount={setHasAccount}
-              emailError={emailError}
-              passwordError={passwordError}
-            />
-          )}
-         
-     
+      {user ? (
+        <Hero handleLogout={handleLogout} />
+        
+        
+      ):(
+        <Login
+          email={email}
+          setEmail={setEmail}
+          password={password}
+          setPassword={setPassword}
+          handleLogin={handleLogin}
+          handleSignup={handleSignup}
+          hasAccount={hasAccount}
+          setHasAccount={setHasAccount}
+          emailError={emailError}
+          passwordError={passwordError}
+        />
+      )}
     </div>
   );
 }
